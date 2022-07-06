@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/style.css') }}">
+    
+    <script src="{{ url_for('static', path='/js/theme.js') }}"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    {% block title %}
+    {% endblock %}
+</head>
+<body>
+    <div class="antialiased min-h-screen flex flex-col">
+        <!-- Sidebar -->
+        <nav class="absolute inset-0 w-80 transform duration-200 z-10 bg-white shadow-md text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+            <div class="flex justify-between">
+                <a href="/" class="font-bold text-2xl sm:text-3xl p-4 ml-4"> Career Students </a>
+            </div>
+            <ul class="mt-5">
+                <!-- Dashboard -->
+                <li>
+                    <a href="/dashboard" class="nav-link bg-purple-800 text-indigo-100">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path 
+                                    stroke-linecap="round" 
+                                    stroke-linejoin="round" 
+                                    stroke-width="2" 
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                ></path>
+                            </svg>
+                        </span>
+                        <span class="px-7 text-md"> Dashboard </span>
+                    </a>
+                </li>
+                <!-- Data Karir -->
+                <li>
+                    <a href="/career" class="nav-link">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path 
+                                    stroke-linecap="round" 
+                                    stroke-linejoin="round" 
+                                    stroke-width="2" 
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                                ></path>
+                            </svg>
+                        </span>
+                        <span class="px-7 text-md"> Data Karier </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <div class="relative z-0">
+            <header class="flex bg-white text-black dark:bg-gray-800 dark:text-white shadow-md items-center px-8">
+                <span class="font-bold text-2xl sm:text-3xl p-4 ml-4">Career Students</span>
+                <div class="flex justify-center flex-1 lg:mr-32"></div>
+                <ul class="flex items-center flex-shrink-0 space-x-6 py-4">
+                    <li class="flex">
+                        <button
+                            x-data="{theme: localStorage.theme }"
+                            class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                            @click="toggleTheme()"
+                            aria-label="Toggle color mode"
+                        >
+                            <div x-show="theme === 'dark'">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                                </svg>
+                            </div>
+                            <div x-show="theme === 'light'">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">   
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div> 
+                        </button>
+                    </li>
+                    <li class="flex">
+                        <button>Logout</button>
+                    </li>
+                </ul>
+            </header>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-200 ml-80">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 p-2">
+            <div class="text-center text-black dark:text-white">
+                Design by Firman Syah
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
