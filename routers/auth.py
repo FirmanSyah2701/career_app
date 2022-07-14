@@ -1,30 +1,33 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Request
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi import APIRouter, status, HTTPException, Request, Form
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from config import templates
 from repository.admin import AdminRepo
 from utils.hashing import Hash
-from utils import access_token, oauth2
-from model import Admin
-
-router = APIRouter()
+from utils import access_token
 
 router = APIRouter(tags=['Authentication'])
 
-templates = Jinja2Templates(directory="templates")
+@router.get('/register')
+async def register_page(request: Request):
+    return templates.TemplateResponse("auth/register.html", {"request": request})
+
+@router.post('/register')
+async def register(email: str = Form(...), password: str = Form(...), school_name: str = Form(...)):
+    admins = await AdminRepo.insert(email, password, school_name)
+    return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
 
 @router.get('/login')
-def index(request: Request):
-    return templates.TemplateResponse("auth/dashboard.html", {"request": request})
+async def login_page(request: Request):
+    return templates.TemplateResponse("auth/login.html", {"request": request})
 
 @router.post('/login')
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    admin = await AdminRepo.get_by_email(form_data.username)
+async def login(email: str = Form(...), password: str = Form(...)):
+    admin = await AdminRepo.get_by_email(email)
     if not admin:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Invalid Credentials")
-    if not Hash.verify(admin['password'], form_data.password):
+    if not Hash.verify(admin['password'], password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Incorrect password")
 
@@ -34,24 +37,19 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         "access_token": token_data,
         "email": admin['email'],
     }
-    response = JSONResponse(content=content)
+    response = RedirectResponse(url="/dashboard",status_code=status.HTTP_302_FOUND)
     response.set_cookie(
         "Authorization",
         value=f"Bearer {token}",
         httponly=True,
         max_age=1800,
         expires=1800,
-        samesite="Lax",
-        secure=False,
+        samesite="lax"
     )
-
     return response
 
-@router.get('/admin/me')
-async def read_users_me(current_user: Admin = Depends(oauth2.get_current_user)):
-    return {'data': current_user}
-
-@router.get('/admin/test')
-async def read_users_me():
-    user = await AdminRepo.get_by_email('smkn1@gmail.com')
-    return {'data': user['_id']}
+@router.post('/logout')
+async def logout(request: Request):
+    response = RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
+    response.delete_cookie('Authorization')
+    return response

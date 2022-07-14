@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Kuesioner Kematangan Karir Siswa</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-tr from-blue-800 to-purple-700">
+        <div class="container max-w-full mx-auto pt-6">
+            <div class="w-1/2 mx-auto px-5 bg-white rounded-md pb-8">
+                <div class="relative flex flex-warp">
+                    <div class="w-full relative">
+                        <div class="mt-7">
+                            <div class="text-center font-semibold text-black">
+                                Formulir Kuesioner Kematangan Karier Siswa
+                            </div>
+                        </div>
+    
+                        <form class="mt-8" action="/career" method="POST">
+                            <div class="mx-auto max-w-lg">
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">NIS</span>
+                                    <input 
+                                        type="text" 
+                                        name="student_parent_number" 
+                                        class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                                </div>
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">Nama</span>
+                                    <input 
+                                        type="text" 
+                                        name="student_name" 
+                                        class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                                </div>
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">Jenis Kelamin</span>
+                                    <div class="flex ml-2 mt-3">
+                                        <div class="flex items-center mr-4">
+                                            <input type="radio" value="laki-laki" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-800">Laki-laki</label>
+                                        </div>
+                                        <div class="flex items-center mr-4">
+                                            <input type="radio" value="perempuan" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-800">Perempuan</label>
+                                        </div>
+                                </div>
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">Kelas</span>
+                                    <div class="relative">
+                                        <input 
+                                            type="text" 
+                                            name="student_class" 
+                                            class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                                    </div>
+                                </div>
+                                
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">Jurusan</span>
+                                    <div class="relative">
+                                        <input 
+                                            type="text" 
+                                            name="major" 
+                                            class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                                    </div>
+                                </div>
+                                <div class="py-2">
+                                    <span class="px-1 text-sm font-semibold text-gray-800">Asal Sekolah</span>
+                                    <div class="relative">
+                                        <select  
+                                            name="school_id" 
+                                            class="block px-3 py-2 rounded-md w-full text-sm bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                                            {% for school in schools %}
+                                                <option value="{{ school['id'] }}">{{ school['school_name'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya sudah membuat keputusan untuk melanjutkan kuliah atau bekerja sesuai jurusan yang saya tempuh 
+                                        setelah lulus sekolah
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="cp_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input
+                                            type="radio" 
+                                            value="S" 
+                                            name="cp_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="cp_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="cp_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya kesulitan dalam menentukan karir yang sesuai 
+                                        dengan jurusan yang saya tempuh setelah lulus sekolah
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS"
+                                            name="cp_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="cp_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="cp_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="cp_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya mengumpulkan informasi terkait karier yang sesuai dengan saya 
+                                        melalui berbagai macam media (koran, sosmed, internet)
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="ce_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="ce_one" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="ce_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="ce_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya berkonsultasi dengan guru BK mengenai karir yang akan saya jalani
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="ce_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="ce_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="ce_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="ce_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya masih ragu dalam menentukan karier yang sesuai bagi saya
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="mcd_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="mcd_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="mcd_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="mcd_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya menentukan karier berdasarkan pekerjaan yang populer pada saat ini
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="mcd_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="mcd_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="mcd_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="mcd_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya memutuskan karier saya tanpa mempedulikan orang lain karena saya lebih tau diri saya sendiri
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="mcd_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="mcd_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="mcd_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="mcd_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya mengetahui persyaratan yang harus dipenuhi untuk masuk dunia kerja
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="wwi_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="wwi_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="wwi_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="wwi_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya merasa ragu bahwa kemampuan saya cukup untuk memasuki dunia kerja
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="wwi_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="wwi_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="wwi_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="wwi_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya memahami resiko-resiko yang ada dunia kerja
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="wwi_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="wwi_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="wwi_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="wwi_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya memiliki gambaran terkait dunia kerja melalui program magang atau praktek kerja lapangan
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="wwi_four" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="wwi_four" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="wwi_four" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="wwi_four" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya mengetahui gambaran tentang dunia kerja dari sosial media yang dibagikan oleh orang lain
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="wwi_five" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="wwi_five" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="wwi_five" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="wwi_five" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya memilih karier yang sesuai dengan minat dan kemampuan yang saya miliki
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="pgw_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="pgw_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="pgw_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="pgw_one" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya siap bekerja tidak sesuai dengan minat dan jurusan yang saya tempuh
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="pgw_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="pgw_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="pgw_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="pgw_two" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+
+                                <div class="py-2">
+                                    <span class="text-sm font-semibold text-gray-800">
+                                        Saya siap bekerja dimana saja asalkan gaji tinggi
+                                    </span>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="SS" 
+                                            name="pgw_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="S" 
+                                            name="pgw_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="TS" 
+                                            name="pgw_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
+                                    </div>
+                                    <div class="flex items-center my-3">
+                                        <input 
+                                            type="radio" 
+                                            value="STS" 
+                                            name="pgw_three" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                    <button 
+                                        type="submit" 
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

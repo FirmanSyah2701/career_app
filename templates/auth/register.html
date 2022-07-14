@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/style.css') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -15,19 +15,17 @@
                 <div class="relative flex flex-warp">
                     <div class="w-full relative">
                         <div class="mt-7">
-                            <div class="text-center font-semibold text-black">Login Form</div>
+                            <div class="text-center font-semibold text-black">Register Form</div>
                         </div>
     
-                        <form action="{{ url_for('login') }}" method="POST" class="mt-8">
+                        <form action="/register" method="POST" class="mt-8">
                             <div class="mx-auto max-w-lg">
                                 <div class="py-2">
                                     <label for="email" class="px-1 text-sm text-gray-600">Email</label>
                                     <input 
                                         name="email"
                                         type="text"
-                                        class="block px-3 py-2 rounded-2xl w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md" 
-                                        placeholder="Enter your Email"    
-                                    >
+                                        class="block px-3 py-2 rounded-2xl w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                 </div>
                                 <div class="py-2" x-data="{ showPassword: false }">
                                     <div class="relative">
@@ -40,18 +38,29 @@
                                         <input
                                             name="password"
                                             type="password"
-                                            class="block px-3 py-2 rounded-2xl w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md" 
-                                            placeholder="Enter your password">
+                                            class="block px-3 py-2 rounded-2xl w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-xs leading-5">
                                             <span x-text="Show" @click="showPassword = !showPassword"></span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="py-2">
+                                    <label for="school_name" class="px-1 text-sm text-gray-600">
+                                        Nama Sekolah
+                                    </label>
+                                    <input 
+                                        name="school_name"
+                                        type="text"
+                                        class="block px-3 py-2 rounded-2xl w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md"    
+                                    >
+                                </div>
                                 <button type="submit" class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl text-white font-semibold mb-2 hover:bg-indigo-500">
-                                    Login
+                                    Submit
                                 </button>
                                 <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-                                    <a href="/register"> Don't have accout ? Register here</a>    
+                                    <a href="/login">
+                                        Have account ? Login Here
+                                    </a>
                                 </span>   
                             </div>
                         </form>

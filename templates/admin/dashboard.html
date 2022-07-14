@@ -1,18 +1,85 @@
 {% extends "base.html" %}
 
-{% block title %} 
-  <title>Dashboard</title>
-{% endblock %} 
-
 {% block content %} 
     <h2 class="py-8 px-6">Dashboard</h2>
 
     <div class="grid gap-6 mb-8 md:grid-cols-2">
         <div class="min-w-0 ml-4 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-            <h4 class="mx-4 font-semibold text-gray-800 dark:text-gray-300">Bar Chart</h4>
+            <h4 class="mx-4 font-semibold text-gray-800 dark:text-gray-800">Bar Chart</h4>
+            <canvas id="barChart" style="width:100%;max-width:700px"></canvas>
         </div>
         <div class="min-w-0 mr-3 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-            <h4 class="mx-4 font-semibold text-gray-800 dark:text-gray-300">Bar Chart</h4>    
+            <h4 class="mx-4 font-semibold text-gray-800 dark:text-gray-800">Pie</h4>  
+            <canvas id="pieChart" style="width:100%;max-width:700px"></canvas>
         </div>
     </div>
 {% endblock %} 
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+
+<script>
+    let high = '{{data_count["Tinggi"]}}';
+    let medium = '{{data_count["Rata-rata"]}}';
+    let low = '{{data_count["Rendah"]}}';
+
+    const xValues = [ "Tinggi", "Rata-rata", "Rendah" ];
+    let yValues = [ high, medium, low ]
+
+    const barColors = ["blue", "orange", "red"];
+
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+    const pieChart = new Chart(pieCtx, {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues,
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Tingkat Kematangan Karir Siswa"
+            },
+        }
+    });
+
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    console.log(yValues);
+
+    const barChart = new Chart(barCtx, {
+        type: "bar",
+        label: xValues,
+        data: {
+            labels: xValues,
+            datasets: [{ 
+                label: 'Tingkat Kematangan Karir Siswa',
+                data: yValues,
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.2)',
+                    'rgba(0, 255, 255, 0.2)',
+                    'rgba(0, 0, 255, 0.2)'
+                ],
+                borderColor: [
+                    'red',
+                    'green',
+                    'blue'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    })
+</script>
+{% endblock %}

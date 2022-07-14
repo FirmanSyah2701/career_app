@@ -1,3 +1,4 @@
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
@@ -10,3 +11,4 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 settings = Settings()
+templates = Jinja2Templates(directory="templates")

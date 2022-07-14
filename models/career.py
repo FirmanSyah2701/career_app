@@ -1,12 +1,5 @@
 from pydantic import BaseModel
-from typing import Union, Optional
-
-
-class Admin(BaseModel):
-    id: str = None
-    email: str
-    password: str
-    school_name: str
+from typing import Union
 
 class CareerPlanning(BaseModel):
     cp_one: str
@@ -29,9 +22,9 @@ class WorldWorkInformation(BaseModel):
     wwi_five: str
 
 class PreferedGroupWork(BaseModel):
-    pgf_one: str
-    pgf_two: str
-    pgf_three: str
+    pgw_one: str
+    pgw_two: str
+    pgw_three: str
 
 class Career(BaseModel):
     career_planning: Union[CareerPlanning, None] = None
@@ -39,15 +32,3 @@ class Career(BaseModel):
     make_career_decisions: Union[MakeCareerDecisions, None] = None
     world_of_work_information: Union[WorldWorkInformation, None] = None
     prefered_group_work: Union[PreferedGroupWork, None] = None
-
-class Student(BaseModel):
-    id: str = None
-    student_parent_number: str
-    student_name: str
-    student_class: str
-    school_id: str
-    major: str
-    career: Union[Career, None] = None
-
-class TokenData(BaseModel):
-    email: Optional[str] = None

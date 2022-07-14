@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <style>
+        .dark .dataTables_length label {
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+        .dark .dataTables_filter label {
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+        .dark .dataTables_info {
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+        .dark #dataTable_next {
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+    </style>
+{% endblock %} 
+
+{% block content %} 
+    <div class="rounded-sm overflow-hidden">
+        <div class="py-8 px-5">Data Karier</div>
+        <div class="sm:flex sm:justify-between sm:items-center">
+            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 p-4">
+                <div class="relative">
+                    <button class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="py-2 px-5 flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        {% for student in students %}
+                            <p> Nama: {{student.student_name}} </p> 
+                            <p> 
+                                Saya sudah membuat keputusan untuk melanjutkan kuliah atau bekerja 
+                                sesuai jurusan yang saya tempuh setelah lulus sekolah: {{ student.cp_one }}
+                            </p>
+                            <p> 
+                                Saya kesulitan dalam menentukan karir yang sesuai 
+                                dengan jurusan yang saya tempuh setelah lulus sekolah: {{ student.cp_two }}
+                            </p>
+                            <p> 
+                                Saya mengumpulkan informasi terkait karier yang sesuai dengan saya 
+                                melalui berbagai macam media (koran, sosmed, internet): {{ student.ce_one }}
+                            </p>
+                            <p> 
+                                Saya berkonsultasi dengan guru BK mengenai karir yang akan saya jalani: {{ student.ce_two }}
+                            </p>
+                            <p> 
+                                Saya masih ragu dalam menentukan karier yang sesuai bagi saya: {{ student.mcd_one }}
+                            </p>
+                            <p> 
+                                Saya menentukan karier berdasarkan pekerjaan yang populer pada saat ini: {{ student.mcd_two }}
+                            </p>
+                            <p> 
+                                Saya memutuskan karier saya tanpa mempedulikan orang lain karena saya lebih tau diri saya sendiri: {{ student.mcd_three }}
+                            </p>
+                            <p> 
+                                Saya mengetahui persyaratan yang harus dipenuhi untuk masuk dunia kerja: {{ student.wwi_one }}
+                            </p>
+                            <p> 
+                                Saya merasa ragu bahwa kemampuan saya cukup untuk memasuki dunia kerja: {{ student.wwi_two }}
+                            </p>
+                            <p> 
+                                Saya memahami resiko-resiko yang ada dunia kerja: {{ student.wwi_three }}
+                            </p>
+                            <p> 
+                                Saya memiliki gambaran terkait dunia kerja melalui program magang atau praktek kerja lapangan: {{ student.wwi_four }}
+                            </p>
+                            <p> 
+                                Saya sedikit mengetahui gambaran tentang dunia kerja dari sosial media yang dibagikan oleh orang lain: {{ student.wwi_five }}
+                            </p>
+                            <p> 
+                                Saya memilih karier yang sesuai dengan minat dan kemampuan yang saya miliki: {{ student.pgw_one }}
+                            </p>
+                            <p> 
+                                Saya siap bekerja tidak sesuai dengan minat dan jurusan yang saya tempuh: {{ student.pgw_two }}
+                            </p>
+                            <p> Saya siap bekerja asalkan gaji tinggi: {{ student.pgw_three }}
+                            </p>
+                            <p> 
+                                karir: {{ student.maturity_career }}
+                            </p>
+                            <p class="mt-5"></p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>              
+    </div>
+{% endblock %} 
+
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+{% endblock %} 

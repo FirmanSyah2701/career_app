@@ -1,5 +1,6 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.responses import RedirectResponse
 from repository.admin import AdminRepo
 from utils import access_token
 from config import settings 
@@ -10,20 +11,29 @@ ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(request: Request):
     credentials_exception = HTTPException(
         status_code = status.HTTP_401_UNAUTHORIZED,
         detail = "Could not validate credentials",
         headers = { "WWW-Authenticate": "Bearer" },
     )
+    
+    cookie_authorization: str = request.cookies.get("Authorization")
+    if cookie_authorization is None:
+        raise credentials_exception
 
-    token_data = access_token.verify_token(token, credentials_exception)
-    user = await AdminRepo.get_by_email(token_data.email)
+    token: str = cookie_authorization.replace("Bearer ", "")
+    
+    
+
+    token_data: str = access_token.verify_token(token)
+    user = await AdminRepo.get_by_email(token_data)
+    
     if user is None:
         raise credentials_exception
+
     return {
         "id": user['_id'],
         "email": user['email'],
-        "password": user['password'],
         "school_name": user['school_name']
     }

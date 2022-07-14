@@ -1,26 +1,25 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from routers import user, career, auth
-from utils import kmeans
+from routers import admin, career, auth, web
+from config import templates
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8000","http://localhost:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="templates")
-
-app.include_router(user.router)
+app.include_router(admin.router)
 app.include_router(career.router)
 app.include_router(auth.router)
-
-@app.get('/test')
-def test_kmeans():
-    return {'data': kmeans.predict()}
-
-@app.get('/dashboard')
-async def dashboard(request: Request):
-    return templates.TemplateResponse("admin/dashboard.html", {"request": request})
+app.include_router(web.router)
 
 @app.exception_handler(404)
 async def custom_404_handler(request, __):
