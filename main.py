@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from routers import admin, career, auth, web
-from config import templates
+from database import migration 
+from core.config import templates
 
 app = FastAPI()
 
@@ -20,6 +21,7 @@ app.include_router(admin.router)
 app.include_router(career.router)
 app.include_router(auth.router)
 app.include_router(web.router)
+app.include_router(migration.router)
 
 @app.exception_handler(404)
 async def custom_404_handler(request, __):

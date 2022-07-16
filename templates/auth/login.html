@@ -17,8 +17,13 @@
                         <div class="mt-7">
                             <div class="text-center font-semibold text-black">Login Form</div>
                         </div>
+
+                        <!-- New with statement to show alert -->
+                        {% with errors=errors %}    
+                            {% include "components/alerts.html" %}
+                        {% endwith %}
     
-                        <form action="{{ url_for('login') }}" method="POST" class="mt-8">
+                        <form action="/login" method="POST">
                             <div class="mx-auto max-w-lg">
                                 <div class="py-2">
                                     <label for="email" class="px-1 text-sm text-gray-600">Email</label>

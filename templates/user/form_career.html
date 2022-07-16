@@ -17,33 +17,52 @@
                             <div class="text-center font-semibold text-black">
                                 Formulir Kuesioner Kematangan Karier Siswa
                             </div>
-                        </div>
-    
-                        <form class="mt-8" action="/career" method="POST">
+                            <!-- New with statement to show alert -->
+                            {% with errors=errors %}    
+                                {% include "components/alerts.html" %}
+                            {% endwith %}
+                        </div>  
+                        <form action="/" method="POST" class="mt-8">
                             <div class="mx-auto max-w-lg">
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">NIS</span>
                                     <input 
                                         type="text" 
                                         name="student_parent_number" 
+                                        value="{{student_parent_number}}"
                                         class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                 </div>
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">Nama</span>
                                     <input 
                                         type="text" 
-                                        name="student_name" 
+                                        name="student_name"
+                                        value="{{student_name}}" 
                                         class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                 </div>
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">Jenis Kelamin</span>
                                     <div class="flex ml-2 mt-3">
                                         <div class="flex items-center mr-4">
-                                            <input type="radio" value="laki-laki" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <input 
+                                                type="radio" 
+                                                value="laki-laki" 
+                                                name="gender" 
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                
+                                                {{ "checked" if gender == 'laki-laki' }}
+                                            >
                                             <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-800">Laki-laki</label>
                                         </div>
                                         <div class="flex items-center mr-4">
-                                            <input type="radio" value="perempuan" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <input 
+                                                type="radio" 
+                                                value="perempuan" 
+                                                name="gender" 
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                
+                                                {{ "checked" if gender == 'perempuan' }}
+                                            >
                                             <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-800">Perempuan</label>
                                         </div>
                                 </div>
@@ -53,6 +72,7 @@
                                         <input 
                                             type="text" 
                                             name="student_class" 
+                                            value="{{student_class}}"
                                             class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                     </div>
                                 </div>
@@ -63,17 +83,23 @@
                                         <input 
                                             type="text" 
                                             name="major" 
+                                            value="{{major}}"
                                             class="block px-3 py-2 rounded-md w-full bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                     </div>
                                 </div>
                                 <div class="py-2">
+                                    
                                     <span class="px-1 text-sm font-semibold text-gray-800">Asal Sekolah</span>
                                     <div class="relative">
                                         <select  
                                             name="school_id" 
                                             class="block px-3 py-2 rounded-md w-full text-sm bg-white border-2 border-gray-300 placeholder-gray-600 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                                             {% for school in schools %}
-                                                <option value="{{ school['id'] }}">{{ school['school_name'] }}</option>
+                                                {% if school['id'] == school_id %}
+                                                    <option value="{{ school['id'] }}" selected>{{ school['school_name'] }}</option>
+                                                {% else %}
+                                                    <option value="{{ school['id'] }}">{{ school['school_name'] }}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -86,33 +112,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="cp_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_one == 'SS' }} 
+                                        >
                                         <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="cp_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"                                            
+                                            {{ "checked" if cp_one == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="cp_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_one == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="cp_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_one == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -127,31 +161,39 @@
                                             type="radio" 
                                             value="SS"
                                             name="cp_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_two == 'SS' }}
+                                        >
                                         <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="cp_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_two == 'S' }} 
+                                        >
                                         <label for="" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="cp_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_two == 'TS' }} 
+                                        >
                                         <label for="" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="cp_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_two == 'STS' }} 
+                                        >
                                         <label for="" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -164,32 +206,40 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="ce_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_one == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
-                                            name="ce_one" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            value="S"
+                                            name="ce_one" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_one == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="ce_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_one == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="ce_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_one == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -201,33 +251,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="ce_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_two == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="ce_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_two == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="ce_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if ce_two == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="ce_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if cp_two == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -239,33 +297,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="mcd_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_one == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="mcd_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_one == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="mcd_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_one == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="mcd_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_one == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -277,33 +343,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="mcd_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_two == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="mcd_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_two == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="mcd_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_two == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="mcd_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_two == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -315,33 +389,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="mcd_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_three == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="mcd_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_three == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="mcd_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_three == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="mcd_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if mcd_three == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -353,33 +435,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="wwi_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_one == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="wwi_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_one == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="wwi_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_one == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="wwi_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_one == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -391,33 +481,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="wwi_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_two == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="wwi_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_two == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="wwi_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_two == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="wwi_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_two == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -429,33 +527,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="wwi_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_three == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="wwi_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_three == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="wwi_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_three == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="wwi_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_three == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -467,33 +573,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="wwi_four" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_four == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="wwi_four" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_four == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="wwi_four" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_four == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="wwi_four" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_four == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -505,33 +619,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="wwi_five" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_five == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="wwi_five" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_five == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="wwi_five" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_five == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="wwi_five" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if wwi_five == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -543,33 +665,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="pgw_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_one == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="pgw_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_one == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="pgw_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_one == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="pgw_one" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_one == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -581,33 +711,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="pgw_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_two == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="pgw_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_two == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="pgw_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_two == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="pgw_two" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_two == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>
@@ -619,33 +757,41 @@
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="SS" 
+                                            value="SS"
                                             name="pgw_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_three == 'SS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="S" 
+                                            value="S"
                                             name="pgw_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_three == 'S' }} 
+                                        >
                                         <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-800">Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="TS" 
+                                            value="TS"
                                             name="pgw_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_three == 'TS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Tidak Sesuai</label>
                                     </div>
                                     <div class="flex items-center my-3">
                                         <input 
                                             type="radio" 
-                                            value="STS" 
+                                            value="STS"
                                             name="pgw_three" 
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            {{ "checked" if pgw_three == 'STS' }} 
+                                        >
                                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-800">Sangat Tidak Sesuai</label>
                                     </div>
                                 </div>

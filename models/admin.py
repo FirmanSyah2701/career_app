@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Form
 from pydantic import BaseModel, Field
 
@@ -6,12 +7,13 @@ class Admin(BaseModel):
     email: str
     password: str
     school_name: str = None
-    level: str
+    level: str = None
 
 class ShowAdmin(BaseModel):
     id: str = None
-    email: str
-    school_name: str
+    email: str = None
+    school_name: str = None
+    msg: List = []
 
 class School(BaseModel):
     id: str = Field(alias='_id')

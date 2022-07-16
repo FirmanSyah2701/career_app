@@ -6,9 +6,9 @@ import numpy as np
 import io
 import json 
 
-def predict(list_data: str, options: str = None):
+def predict(list_data: str, school_id: str, options: str = None):
     #Set seed
-    np.random.seed(123)
+    #np.random.seed(123)
 
     #Generate to dataframe
     df = pd.DataFrame(list_data)
@@ -53,6 +53,7 @@ def predict(list_data: str, options: str = None):
 
     choices = ['Tinggi','Rata-rata','Rendah']
     df['maturity_career'] = np.select(conditions, choices)
+    df = df[df.school_id == school_id]
 
     if options is None :
         res = df.to_json(orient="records")
@@ -61,7 +62,33 @@ def predict(list_data: str, options: str = None):
 
     if options == 'export':
         stream = io.StringIO()
-        df.to_csv(stream, index=False)
+        new_columns = [
+            'id',
+            'NIS', 
+            'Nama', 
+            'Kelas', 
+            'JK', 
+            'Jurusan',
+            'Saya sudah membuat keputusan untuk melanjutkan kuliah atau bekerja sesuai jurusan yang saya tempuh setelah lulus sekolah',
+            'Saya kesulitan dalam menentukan karir yang sesuai dengan jurusan yang saya tempuh setelah lulus sekolah',
+            'Saya mengumpulkan informasi terkait karier yang sesuai dengan saya melalui berbagai macam media (koran, sosmed, internet)',
+            'Saya berkonsultasi dengan guru BK mengenai karir yang akan saya jalani',
+            'Saya masih ragu dalam menentukan karier yang sesuai bagi saya',
+            'Saya menentukan karier berdasarkan pekerjaan yang populer pada saat ini',
+            'Saya memutuskan karier saya tanpa mempedulikan orang lain karena saya lebih tau diri saya sendiri',
+            'Saya mengetahui persyaratan yang harus dipenuhi untuk masuk dunia kerja',
+            'Saya merasa ragu bahwa kemampuan saya cukup untuk memasuki dunia kerja',
+            'Saya memahami resiko-resiko yang ada dunia kerja',
+            'Saya memiliki gambaran terkait dunia kerja melalui program magang atau praktek kerja lapangan',
+            'Saya mengetahui gambaran tentang dunia kerja dari sosial media yang dibagikan oleh orang lain',
+            'Saya memilih karier yang sesuai dengan minat dan kemampuan yang saya miliki',
+            'Saya siap bekerja tidak sesuai dengan minat dan jurusan yang saya tempuh',
+            'Saya siap bekerja dimana saja asalkan gaji tinggi'
+        ]
+        new_df = df.iloc[:,:23].copy()
+        new_df.drop(['_id', 'school_id'], axis=1, inplace=True)
+        new_df.columns = new_columns
+        new_df.to_csv(stream, index=False)
         
         response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
         response.headers["Content-Disposition"] = "attachment; filename=karir_siswa.csv"

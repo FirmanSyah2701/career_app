@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 
 {% block styles %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
@@ -11,7 +11,7 @@
         <div class="sm:flex sm:justify-between sm:items-center">
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 p-4">
                 <div class="relative">
-                    <a href="/export" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                    <a href="/career/export/{{school_id}}" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                         Export CSV
                     </a>
                 </div>
@@ -25,13 +25,13 @@
                         <table class="min-w-full text-center"  id="dataTable">
                             <thead class="border-b bg-gray-800">
                                 <tr>
-                                    <th> NIS </th>
-                                    <th> Nama </th>
-                                    <th> Jenis Kelamin </th>
-                                    <th> Jurusan </th>
-                                    <th> Kelas </th>
-                                    <th> Kematangan Karir</th>
-                                    <th> Aksi </th>
+                                    <th class="text-black dark:text-white"> NIS </th>
+                                    <th class="text-black dark:text-white"> Nama </th>
+                                    <th class="text-black dark:text-white"> Jenis Kelamin </th>
+                                    <th class="text-black dark:text-white"> Jurusan </th>
+                                    <th class="text-black dark:text-white"> Kelas </th>
+                                    <th class="text-black dark:text-white"> Kematangan Karir</th>
+                                    <th class="text-black dark:text-white"> Aksi </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,15 +43,19 @@
                                         <td class="dark:text-black">{{student.major}}</td>
                                         <td class="dark:text-black">{{student.student_class}}</td>
                                         <td class="dark:text-black">
-                                            {{ student.maturity_career }}
-                                        </td>
-                                        <!-- <td>
+                                            {% if "Tinggi" in student.maturity_career %}
+                                                {% set badge_class = 'bg-green-500' %}
+                                            {% elif "Rata-rata" in student.maturity_career %}
+                                                {% set badge_class = 'bg-yellow-500' %}
+                                            {% else %}
+                                                {% set badge_class = "bg-red-500" %}
+                                            {% endif %}
                                             <span 
-                                                class="text-sm inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline text-black rounded-full"
+                                                class="text-sm inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-white rounded-full {{badge_class}}"
                                             >   
-                                                Matang
+                                                {{ student.maturity_career }}
                                             </span>
-                                        </td> -->
+                                        </td>
                                         <td>
                                             <a 
                                                 href="#"
@@ -59,14 +63,13 @@
                                             >
                                                 <span> Detail </span>
                                             </a>
-                                            <!-- <form action="/career/{{student._id}}" method="POST">
-                                                <button 
-                                                    type="submit"
-                                                    class="inline-block px-6 pt-2.5 pb-2 text-sm leading-normal shadow-md rounded bg-blue-600 text-white align-center"
-                                                >
-                                                    <span> Hapus </span>
-                                                </button>
-                                            </form> -->
+                                            
+                                            <a
+                                                href="/career/{{student._id}}"
+                                                class="inline-block px-6 pt-2.5 pb-2 text-sm leading-normal shadow-md rounded bg-red-600 text-white align-center"
+                                            >
+                                                <span> Hapus </span>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}

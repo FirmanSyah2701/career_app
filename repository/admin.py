@@ -1,4 +1,3 @@
-from models.admin import Admin
 from database.mongo import database as db
 from utils.hashing import Hash
 import uuid
@@ -28,19 +27,6 @@ class AdminRepo():
             "password": Hash.bcrypt(password),
             "school_name": school_name,
             'level': 'Admin'
-        }
-
-        await db.get_collection('admin').insert_one(_admin)
-
-    @staticmethod
-    async def insert_super_admin():
-        id = str(uuid.uuid4())
-        
-        _admin = {
-            "_id": id,
-            "email": 'admin123@gmail.com',
-            "password": Hash.bcrypt('admin123'),
-            'level': 'Super Admin'
         }
 
         await db.get_collection('admin').insert_one(_admin)

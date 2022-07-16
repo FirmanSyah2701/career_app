@@ -1,0 +1,7 @@
+{% if errors %}
+  <div class="bg-red-100 rounded-lg py-5 px-6 text-base text-red-700 mb-3" role="alert">
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+  </div>
+{% endif %}
