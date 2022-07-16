@@ -69,7 +69,7 @@ class CareerForm:
             self.errors.append("Asal sekolah harus diisi!")
         if not self.major:
             self.errors.append("Jurusan harus diisi!")
-        if not self.cp_one or not self.cp_tw or not self.ce_on or not self.ce_tw or not self.mcd_on or not self.mcd_tw or not self.mcd_thre or not self.wwi_on or not self.wwi_tw or not self.wwi_thre or not self.wwi_fou or not self.wwi_fiv or not self.pgw_on or not self.pgw_tw or not self.pgw_thre or not self.errors:
+        if not self.cp_one or not self.cp_two or not self.ce_one or not self.ce_two or not self.mcd_one or not self.mcd_two or not self.mcd_three or not self.wwi_one or not self.wwi_two or not self.wwi_three or not self.wwi_four or not self.wwi_five or not self.pgw_one or not self.pgw_two or not self.pgw_three:
             self.errors.append("Kuesioner harus diisi!")
         if not self.errors:
             return True
