@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+""" from fastapi.middleware.cors import CORSMiddleware """
 from fastapi.staticfiles import StaticFiles
 from routers import admin, career, auth, web
 from database import migration 
@@ -7,7 +7,7 @@ from core.config import templates
 
 app = FastAPI()
 
-origins = [
+""" origins = [
     "http://127.0.0.1:8000",
     "http://localhost:8000"
 ]
@@ -18,7 +18,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
+) """
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
