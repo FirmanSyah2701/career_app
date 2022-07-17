@@ -10,7 +10,7 @@
 <body>
     <div class="min-h-screen bg-gradient-to-tr from-blue-800 to-purple-700">
         <div class="container max-w-full mx-auto pt-6">
-            <div class="w-1/2 mx-auto px-5 bg-white rounded-md pb-8">
+            <div class="lg:w-1/2 sm:w-2/3 mx-auto px-5 bg-white rounded-md pb-8">
                 <div class="relative flex flex-warp">
                     <div class="w-full relative">
                         <div class="mt-7">
@@ -42,29 +42,28 @@
                                 </div>
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">Jenis Kelamin</span>
-                                    <div class="flex ml-2 mt-3">
-                                        <div class="flex items-center mr-4">
-                                            <input 
-                                                type="radio" 
-                                                value="laki-laki" 
-                                                name="gender" 
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                
-                                                {{ "checked" if gender == 'laki-laki' }}
-                                            >
-                                            <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-800">Laki-laki</label>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input 
-                                                type="radio" 
-                                                value="perempuan" 
-                                                name="gender" 
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                
-                                                {{ "checked" if gender == 'perempuan' }}
-                                            >
-                                            <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-800">Perempuan</label>
-                                        </div>
+                                    <div class="flex items-center my-3 px-1">
+                                        <input 
+                                            type="radio" 
+                                            value="laki-laki" 
+                                            name="gender" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            
+                                            {{ "checked" if gender == 'laki-laki' }}
+                                        >
+                                        <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-800">Laki-laki</label>
+                                    </div>
+                                    <div class="flex items-center my-3 px-1">
+                                        <input 
+                                            type="radio" 
+                                            value="perempuan" 
+                                            name="gender" 
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            
+                                            {{ "checked" if gender == 'perempuan' }}
+                                        >
+                                        <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-800">Perempuan</label>
+                                    </div>
                                 </div>
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">Kelas</span>

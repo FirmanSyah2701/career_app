@@ -1488,6 +1488,9 @@ th {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
+  .sm\:w-2\/3 {
+    width: 66.666667%;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1509,5 +1512,8 @@ th {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 }
