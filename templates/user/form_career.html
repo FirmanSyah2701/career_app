@@ -17,13 +17,12 @@
                             <div class="text-center font-semibold text-black">
                                 Formulir Kuesioner Kematangan Karier Siswa
                             </div>
-                            <!-- New with statement to show alert -->
-                            {% with errors=errors %}    
-                                {% include "components/alerts.html" %}
-                            {% endwith %}
                         </div>  
-                        <form action="/" method="POST" class="mt-8">
+                        <form id="frm_career" action="/" method="POST" class="mt-8">
                             <div class="mx-auto max-w-lg">
+                                {% with errors=errors, success=success %}    
+                                    {% include "components/alerts.html" %}
+                                {% endwith %}
                                 <div class="py-2">
                                     <span class="px-1 text-sm font-semibold text-gray-800">NIS</span>
                                     <input 
@@ -810,5 +809,30 @@
             </div>
         </div>
     </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
+    <script>
+            document.querySelector('#frm_career').addEventListener('submit', function(e) {
+                var form = this;
+
+                e.preventDefault();
+                swal({
+                    title: "Apakah anda yakin?",
+                    text: "Kamu tidak akan bisa ubah data lagi saat sudah tersimpan",
+                    icon: "warning",
+                    buttons: [
+                        'Batalkan',
+                        'Ya, Simpan'
+                    ],
+                    dangerMode: true,
+                    }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        form.submit();
+                    } else {
+                        return false;
+                    }
+                })
+            });
+    </script>
 </body>
 </html>

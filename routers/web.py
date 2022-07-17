@@ -15,7 +15,7 @@ async def index(request: Request):
     schools = await SchoolRepo.retrieve()
     return templates.TemplateResponse("user/form_career.html", {
         "request": request, 
-        'schools': schools
+        "schools": schools
     })
 
 @router.post('/', tags=['Career for student'])
@@ -26,7 +26,11 @@ async def create(request: Request):
     if await form.is_valid():
         try:
             new_student = await StudentRepo.insert(form)
-            return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
+            return templates.TemplateResponse("user/form_career.html", {
+                "request": request, 
+                "success": "Data berhasil disimpan",
+                "schools": schools
+            })
         except Exception as e:
             print(e)
             context = form.__dict__.copy()
