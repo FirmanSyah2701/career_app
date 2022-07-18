@@ -53,6 +53,7 @@ def predict(list_data: str, current_user: str, options: str = None):
 
     choices = ['Tinggi','Rata-rata','Rendah']
     df['maturity_career'] = np.select(conditions, choices)
+    
     if current_user['school_name']:
         df = df[df.school_id == current_user['id']]
 

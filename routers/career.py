@@ -17,10 +17,13 @@ async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2
         })
     students = await StudentRepo.retrieve()
     data = kmeans.predict(students, current_user)
+    school_id = ""
+    if current_user['school_name']:
+        school_id = current_user['id']
     return templates.TemplateResponse("admin/career.html", {
         "request": request,
         "students": data,
-        "school_id": current_user['id'],
+        "school_id": school_id,
         "title": "Data Karir"
     })
 

@@ -11,9 +11,11 @@
         <div class="sm:flex sm:justify-between sm:items-center">
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 p-4">
                 <div class="relative">
-                    <a href="/career/export/{{school_id}}" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                        Export CSV
-                    </a>
+                    {% if school_id %}
+                        <a href="/career/export/{{school_id}}" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            Export CSV
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -63,13 +65,14 @@
                                             >
                                                 <span> Detail </span>
                                             </a>
-                                            
-                                            <a
-                                                href="/career/{{student._id}}"
-                                                class="inline-block px-6 pt-2.5 pb-2 text-sm leading-normal shadow-md rounded bg-red-600 text-white align-center"
-                                            >
-                                                <span> Hapus </span>
-                                            </a>
+                                            {% if school_id %}
+                                                <a
+                                                    href="/career/{{student._id}}"
+                                                    class="inline-block px-6 pt-2.5 pb-2 text-sm leading-normal shadow-md rounded bg-red-600 text-white align-center"
+                                                >
+                                                    <span> Hapus </span>
+                                                </a>    
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
