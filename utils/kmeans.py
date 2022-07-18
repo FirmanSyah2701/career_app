@@ -6,7 +6,7 @@ import numpy as np
 import io
 import json 
 
-def predict(list_data: str, school_id: str, options: str = None):
+def predict(list_data: str, current_user: str, options: str = None):
     #Set seed
     #np.random.seed(123)
 
@@ -53,7 +53,8 @@ def predict(list_data: str, school_id: str, options: str = None):
 
     choices = ['Tinggi','Rata-rata','Rendah']
     df['maturity_career'] = np.select(conditions, choices)
-    df = df[df.school_id == school_id]
+    if current_user['school_name']:
+        df = df[df.school_id == current_user['id']]
 
     if options is None :
         res = df.to_json(orient="records")

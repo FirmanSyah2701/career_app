@@ -16,7 +16,7 @@ async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2
             "errors": [current_user['msg']]
         })
     students = await StudentRepo.retrieve()
-    data = kmeans.predict(students, current_user['id'])
+    data = kmeans.predict(students, current_user)
     return templates.TemplateResponse("admin/career.html", {
         "request": request,
         "students": data,
@@ -42,5 +42,5 @@ async def export(request: Request, id: str, current_user: ShowAdmin = Depends(oa
             "errors": [current_user['msg']]
         })
     students = await StudentRepo.retrieve()
-    data = kmeans.predict(students, current_user['id'], 'export')
+    data = kmeans.predict(students, current_user, 'export')
     return data

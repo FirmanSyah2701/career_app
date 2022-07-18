@@ -55,7 +55,7 @@ async def dashboard(request: Request, current_user: ShowAdmin = Depends(oauth2.g
             "errors": [current_user['msg']]
         })
     students = await StudentRepo.retrieve()
-    data = kmeans.predict(students, current_user['id'], "dashboard")
+    data = kmeans.predict(students, current_user, "dashboard")
     return templates.TemplateResponse("admin/dashboard.html", {
         "request": request,
         "data_count": data,
