@@ -15,19 +15,35 @@ async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2
             "request": request,
             "errors": [current_user['msg']]
         })
+    
     students = await StudentRepo.retrieve()
     data = kmeans.predict(students, current_user)
-    school_id = ""
-    if current_user['school_name']:
-        school_id = current_user['id']
+    
     return templates.TemplateResponse("admin/career.html", {
         "request": request,
         "students": data,
-        "school_id": school_id,
+        "school_id": current_user['id'] or "",
         "title": "Data Karir"
     })
 
 @router.get('/career/{id}')
+async def detail(request: Request, id: str, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
+    if current_user['msg']:
+        return templates.TemplateResponse("auth/login.html", {
+            "request": request,
+            "errors": [current_user['msg']]
+        })
+    
+    students = await StudentRepo.retrieve()
+    data = kmeans.predict(students, current_user, id, 'detail')
+    return templates.TemplateResponse("admin/detail_career.html", {
+        "request": request,
+        "students": data,
+        "title": "Detail Karir"
+    })
+
+
+@router.get('/career/delete/{id}')
 async def delete(request: Request, id: str, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
     if current_user['msg']:
         return templates.TemplateResponse("auth/login.html", {

@@ -6,10 +6,7 @@ import numpy as np
 import io
 import json 
 
-def predict(list_data: str, current_user: str, options: str = None):
-    #Set seed
-    #np.random.seed(123)
-
+def predict(list_data: str, current_user: str, student_id: str = None, options: str = None):
     #Generate to dataframe
     df = pd.DataFrame(list_data)
     data_question = df.loc[:, 'cp_one':'pgw_three']
@@ -51,14 +48,27 @@ def predict(list_data: str, current_user: str, options: str = None):
         (df['maturity_career'] == 2)
     ]
 
-    choices = ['Tinggi','Rata-rata','Rendah']
+    choices = ['Rendah','Rata-rata', 'Tinggi']
     df['maturity_career'] = np.select(conditions, choices)
     
     if current_user['school_name']:
-        df = df[df.school_id == current_user['id']]
+        df = df[df.school_id == current_user['id']]    
 
     if options is None :
         res = df.to_json(orient="records")
+        parsed = json.loads(res)
+        return parsed
+
+    if student_id :
+        new_df = pd.concat([df, df2], axis=1, join='inner')
+        new_df['career_planning'] = new_df['career_planning'] / 8 * 100
+        new_df['career_exploration'] = new_df['career_exploration'] / 8 * 100
+        new_df['make_career_decisions'] = new_df['make_career_decisions'] / 12 * 100 
+        new_df['world_of_work_information'] = new_df['world_of_work_information'] / 20 * 100
+        new_df['prefered_group_work'] = new_df['prefered_group_work'] / 12 * 100
+        new_df['average'] = (new_df['career_planning'] + new_df['career_exploration'] + new_df['make_career_decisions'] + new_df['world_of_work_information'] + new_df['prefered_group_work']) / 5
+        new_df = new_df[new_df._id == student_id]
+        res = new_df.to_json(orient="records")
         parsed = json.loads(res)
         return parsed
 
@@ -71,6 +81,7 @@ def predict(list_data: str, current_user: str, options: str = None):
             'Kelas', 
             'JK', 
             'Jurusan',
+            #'Tanggal'
             'Saya sudah membuat keputusan untuk melanjutkan kuliah atau bekerja sesuai jurusan yang saya tempuh setelah lulus sekolah',
             'Saya kesulitan dalam menentukan karir yang sesuai dengan jurusan yang saya tempuh setelah lulus sekolah',
             'Saya mengumpulkan informasi terkait karier yang sesuai dengan saya melalui berbagai macam media (koran, sosmed, internet)',

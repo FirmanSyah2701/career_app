@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class Student(BaseModel):
     id: str = None
@@ -8,6 +9,7 @@ class Student(BaseModel):
     gender: str
     school_id: str
     major: str
+    #created_at: datetime
     cp_one: str
     cp_two: str
     ce_one: str

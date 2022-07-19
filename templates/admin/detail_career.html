@@ -1,0 +1,101 @@
+{% extends "admin/base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/dataTables_dark.css') }}">
+{% endblock %} 
+
+{% block content %} 
+    <div class="rounded-sm overflow-hidden">
+        <div class="py-8 px-5">Detail Karier Siswa</div>
+        <div class="sm:flex sm:justify-between sm:items-center">
+            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 p-4">
+                <div class="relative">
+                    {% if school_id %}
+                        <a href="/career/export/{{school_id}}" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            Export CSV
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="py-2 px-5 flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-center"  id="dataTable">
+                            <thead class="border-b bg-gray-800">
+                                <tr>
+                                    <th class="text-black dark:text-white"> NIS </th>
+                                    <th class="text-black dark:text-white"> Nama </th>
+                                    <th class="text-black dark:text-white"> Jenis Kelamin </th>
+                                    <th class="text-black dark:text-white"> Jurusan </th>
+                                    <th class="text-black dark:text-white"> Kelas </th>
+                                    <th class="text-black dark:text-white"> 
+                                        Perencanaan Karir
+                                    </th>
+                                    <th class="text-black dark:text-white"> 
+                                        Eksplorasi Karir
+                                    </th>
+                                    <th class="text-black dark:text-white"> 
+                                        Membuat Keputusan Karir
+                                    </th>
+                                    <th class="text-black dark:text-white"> 
+                                        Pengetahuan Dunia Kerja
+                                    </th>
+                                    <th class="text-black dark:text-white"> 
+                                        Kelompok pekerjaan yang disukai
+                                    </th>
+                                    <th> Rata-rata </th>
+                                    <th class="text-black dark:text-white"> Kematangan Karir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr class="border-b">
+                                        <td class="dark:text-black">{{student.student_parent_number}}</td>
+                                        <td class="dark:text-black">{{student.student_name}}</td>
+                                        <td class="dark:text-black">{{student.gender}}</td>
+                                        <td class="dark:text-black">{{student.major}}</td>
+                                        <td class="dark:text-black">{{student.student_class}}</td>
+                                        <td class="dark:text-black">{{student.career_planning}}</td>
+                                        <td class="dark:text-black">{{student.career_exploration}}</td>
+                                        <td class="dark:text-black">{{student.make_career_decisions}}</td>
+                                        <td class="dark:text-black">{{student.world_of_work_information}}</td>
+                                        <td class="dark:text-black">{{student.prefered_group_work}}</td>
+                                        <td class="dark:text-black">{{student.average}}</td>
+                                        <td class="dark:text-black">
+                                            {% if "Tinggi" in student.maturity_career %}
+                                                {% set badge_class = 'bg-green-500' %}
+                                            {% elif "Rata-rata" in student.maturity_career %}
+                                                {% set badge_class = 'bg-yellow-500' %}
+                                            {% else %}
+                                                {% set badge_class = "bg-red-500" %}
+                                            {% endif %}
+                                            <span 
+                                                class="text-sm inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-white rounded-full {{badge_class}}"
+                                            >   
+                                                {{ student.maturity_career }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>              
+    </div>
+{% endblock %} 
+
+{% block js %}
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+{% endblock %} 

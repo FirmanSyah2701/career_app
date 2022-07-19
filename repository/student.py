@@ -1,5 +1,6 @@
 from models.student import Student
 from database.mongo import database as db
+from datetime import datetime
 import uuid
 
 class StudentRepo():
@@ -32,6 +33,7 @@ class StudentRepo():
             "gender": student.gender,
             "school_id": student.school_id,
             "major": student.major,
+            #"created_at": datetime.now(),
             "cp_one": student.cp_one,
             "cp_two": student.cp_two,
             "ce_one": student.ce_one,
