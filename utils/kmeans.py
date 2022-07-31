@@ -42,7 +42,7 @@ def predict(list_data: list, current_user: str, student_id: str = None, options:
         (df['maturity_career'] == 2)
     ]
 
-    choices = ['Tinggi','Rata-rata', 'Rendah']
+    choices = ['Rendah','Rata-rata', 'Tinggi']
     df['maturity_career'] = np.select(conditions, choices)
     
     if current_user['school_name']:
