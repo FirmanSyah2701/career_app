@@ -30,3 +30,15 @@ class AdminRepo():
         }
 
         await db.get_collection('admin').insert_one(_admin)
+
+    @staticmethod
+    async def update(id: str, email: str, school: str):
+        
+        admin = await db.get_collection('admin').find_one({'_id': id})
+        if(admin):
+            update_admin = await db.get_collection('admin').update_one(
+                {"_id": id}, 
+                {"$set": {'email': email, 'school_name': school} }
+            )
+            return True
+        return False

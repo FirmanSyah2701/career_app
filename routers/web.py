@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Request, Depends, status
-from fastapi.responses import RedirectResponse
+from fastapi import APIRouter, Request, Depends
 from core.config import templates
 from middleware import oauth2
 from models.admin import ShowAdmin
@@ -55,9 +54,10 @@ async def dashboard(request: Request, current_user: ShowAdmin = Depends(oauth2.g
             "errors": [current_user['msg']]
         })
     students = await StudentRepo.retrieve()
-    data = kmeans.predict(students, current_user, "dashboard")
+    data = kmeans.predict(list_data=students, current_user=current_user, options="dashboard")
     return templates.TemplateResponse("admin/dashboard.html", {
         "request": request,
         "data_count": data,
+        "is_admin": current_user['school_name'],
         "title": "Dashboard"
     })

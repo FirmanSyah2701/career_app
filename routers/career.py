@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import RedirectResponse
-from core.config import templates
+from core.config import templates, settings
 from repository.student import StudentRepo
 from models.admin import ShowAdmin
 from middleware import oauth2
@@ -61,5 +61,5 @@ async def export(request: Request, id: str, current_user: ShowAdmin = Depends(oa
             "errors": [current_user['msg']]
         })
     students = await StudentRepo.retrieve()
-    data = kmeans.predict(students, current_user, 'export')
+    data = kmeans.predict(list_data=students, current_user=current_user, options='export')
     return data

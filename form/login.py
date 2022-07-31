@@ -14,12 +14,8 @@ class LoginForm:
         self.password = form.get("password")
 
     async def is_valid(self):
-        if not self.email: 
-            self.errors.append("Email tidak boleh kosong")
-        if not (self.email.__contains__("@")):
-            self.errors.append("Email tidak valid")
-        if not self.password:
-            self.errors.append("password tidak boleh kosong")
+        if not self.email or not self.password: 
+            self.errors.append("Email dan password tidak boleh kosong")
         if not self.errors:
             return True
         return False

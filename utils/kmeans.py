@@ -6,19 +6,12 @@ import numpy as np
 import io
 import json 
 
-def predict(list_data: str, current_user: str, student_id: str = None, options: str = None):
+def predict(list_data: list, current_user: str, student_id: str = None, options: str = None):
     #Generate to dataframe
     df = pd.DataFrame(list_data)
     data_question = df.loc[:, 'cp_one':'pgw_three']
 
-    question_trap = [
-        'cp_two', 
-        'mcd_one', 
-        'mcd_two', 
-        'wwi_two', 
-        'pgw_two', 
-        'pgw_three'
-    ]
+    question_trap = ['cp_two', 'mcd_one', 'mcd_two', 'wwi_two', 'pgw_two', 'pgw_three']
 
     data_question = data_question.replace({'SS': 4, 'S': 3, 'TS': 2, 'STS': 1})
     data_question[question_trap] = data_question[question_trap].replace({'SS': 1, 'S': 2, 'TS': 3, 'STS': 4})
@@ -26,7 +19,8 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
     data_question['career_planning']            = data_question['cp_one'] + data_question['cp_two']
     data_question['career_exploration']         = data_question['ce_one'] + data_question['ce_two']
     data_question['make_career_decisions']      = data_question['mcd_one'] + data_question['mcd_two'] + data_question['mcd_three']
-    data_question['world_of_work_information']  = data_question['wwi_one'] + data_question['wwi_two'] + data_question['wwi_three'] + data_question['wwi_four'] + data_question['wwi_five']
+    data_question['world_of_work_information']  = data_question['wwi_one'] + data_question['wwi_two'] 
+    + data_question['wwi_three'] + data_question['wwi_four'] + data_question['wwi_five']
     data_question['prefered_group_work']        = data_question['pgw_one'] + data_question['pgw_two'] + data_question['pgw_three']
 
     df2 = data_question.loc[:, 'career_planning':'prefered_group_work']
@@ -37,7 +31,7 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
     df_scaled = scaler.fit_transform(df2)
 
     # Clustering by KMeans
-    km = KMeans(n_clusters=3, init = 'k-means++', random_state = 123)
+    km = KMeans(n_clusters=3, random_state = 42)
     X = df_scaled
     y_predicted = km.fit_predict(X)
     df['maturity_career'] = y_predicted
@@ -48,7 +42,7 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
         (df['maturity_career'] == 2)
     ]
 
-    choices = ['Rendah','Rata-rata', 'Tinggi']
+    choices = ['Rata-rata','Tinggi', 'Rendah']
     df['maturity_career'] = np.select(conditions, choices)
     
     if current_user['school_name']:
@@ -75,7 +69,6 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
     if options == 'export':
         stream = io.StringIO()
         new_columns = [
-            'id',
             'NIS', 
             'Nama', 
             'Kelas', 
@@ -96,12 +89,14 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
             'Saya mengetahui gambaran tentang dunia kerja dari sosial media yang dibagikan oleh orang lain',
             'Saya memilih karier yang sesuai dengan minat dan kemampuan yang saya miliki',
             'Saya siap bekerja tidak sesuai dengan minat dan jurusan yang saya tempuh',
-            'Saya siap bekerja dimana saja asalkan gaji tinggi'
+            'Saya siap bekerja dimana saja asalkan gaji tinggi',
+            'Kematangan Karier'
         ]
         new_df = df.iloc[:,:23].copy()
-        new_df.drop(['_id', 'school_id'], axis=1, inplace=True)
+        #print(new_df)
+        new_df.drop(["_id", 'school_id'], axis=1, inplace=True)
         new_df.columns = new_columns
-        new_df.to_csv(stream, index=False)
+        new_df.to_csv(stream)
         
         response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
         response.headers["Content-Disposition"] = "attachment; filename=karir_siswa.csv"
@@ -111,3 +106,14 @@ def predict(list_data: str, current_user: str, student_id: str = None, options: 
         cluster_counts = df['maturity_career'].value_counts().sort_index(ascending=True)
         response = cluster_counts.to_dict()
         return response
+
+""" def evaluation_sse(list_data: list):
+    X = predict(list_data)
+    sse = []
+    for i in range(1, 11):
+        kmeans = KMeans(n_clusters = i, random_state = 42)
+        kmeans.fit_predict(X)
+        sse_ = kmeans.inertia_
+        sse.append(sse_)
+
+    return sse """

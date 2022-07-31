@@ -55,11 +55,11 @@ class CareerForm:
     async def is_valid(self):
         if not self.student_parent_number:
             self.errors.append("NIS harus diisi!")
-        if self.student_parent_number.isdigit() == False:
+        if not re.match("^\\d+$", self.student_parent_number):
             self.errors.append("NIS hanya boleh diisi angka!")
         if not self.student_name:
             self.errors.append("Nama harus diisi!")
-        if not re.match('^[a-zA-Z\.\s\']*$', self.student_name):
+        if not re.match(r"/^[a-zA-Z\s\']*$/", self.student_name):
             self.errors.append("Nama tidak valid!")
         if not self.student_class:
             self.errors.append("Kelas harus diisi!")

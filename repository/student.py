@@ -1,6 +1,5 @@
 from models.student import Student
 from database.mongo import database as db
-from datetime import datetime
 import uuid
 
 class StudentRepo():
