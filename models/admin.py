@@ -1,16 +1,17 @@
 from typing import List
-from fastapi import Form
 from pydantic import BaseModel, Field
 
 class Admin(BaseModel):
     id: str = None
     email: str
     password: str
+    name: str
     school_name: str = None
     level: str = None
 
 class ShowAdmin(BaseModel):
     id: str = None
+    name: str = None
     email: str = None
     school_name: str = None
     msg: List = []

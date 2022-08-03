@@ -28,7 +28,7 @@ async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2
 
 @router.get('/career/{id}')
 async def detail(request: Request, id: str, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
-    if current_user['msg']:
+    if 'msg' in current_user:
         return templates.TemplateResponse("auth/login.html", {
             "request": request,
             "errors": [current_user['msg']]
@@ -45,7 +45,7 @@ async def detail(request: Request, id: str, current_user: ShowAdmin = Depends(oa
 
 @router.get('/career/delete/{id}')
 async def delete(request: Request, id: str, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
-    if current_user['msg']:
+    if 'msg' in current_user:
         return templates.TemplateResponse("auth/login.html", {
             "request": request,
             "errors": [current_user['msg']]
@@ -55,7 +55,7 @@ async def delete(request: Request, id: str, current_user: ShowAdmin = Depends(oa
 
 @router.get('/career/export/{id}')
 async def export(request: Request, id: str, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
-    if current_user['msg']:
+    if 'msg' in current_user:
         return templates.TemplateResponse("auth/login.html", {
             "request": request,
             "errors": [current_user['msg']]

@@ -1,8 +1,8 @@
-from fastapi import HTTPException, status, Request
+from fastapi import Request
 from fastapi.security import OAuth2PasswordBearer
 from repository.admin import AdminRepo
 from utils import access_token
-from core.config import settings, templates
+from core.config import settings
 
 SECRET_KEY = settings.JWT_SECRET_KEY
 ALGORITHM = settings.JWT_ALGORITHM
@@ -21,10 +21,11 @@ async def get_current_user(request: Request):
     
     token_data: str = access_token.verify_token(token)
     user = await AdminRepo.get_by_email(token_data)
-
+    school = ""
+    if 'school_name' in user: school = user['school_name']
     return {
         "id": user['_id'],
         "email": user['email'],
-        "school_name": user['school_name'] or "",
-        "msg": ""
+        "name": user['name'],
+        "school_name": school,
     }

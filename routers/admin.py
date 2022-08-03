@@ -36,6 +36,7 @@ async def register(request: Request):
 async def profile_page(request: Request, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
     return templates.TemplateResponse("admin/profile.html", {
         'request': request,
+        'title': 'Profile',
         'data': current_user
     })
 
@@ -45,19 +46,23 @@ async def change_profile(request: Request, current_user: ShowAdmin = Depends(oau
     await form.load_data()
     if await form.is_valid():
         try:
-            school_name = form.school_name or ""
-            admin = await AdminRepo.update(current_user['id'], form.email, "")
+            if 'school_name' in current_user:
+                data = {"email": form.email, "name": form.name, "school_name": form.school_name}
+            else:
+                data = {"email": form.email, "name": form.name}
+            admin = await AdminRepo.update(current_user['id'], data)
             return templates.TemplateResponse("admin/profile.html", {
                 "request": request,
                 "data": current_user,
+                "title": "Profile",
                 "success": "Data berhasil diubah"
             })
         except Exception as e:
             print(e)
             context = form.__dict__.copy()
-            context.update({"data": current_user})
+            context.update({"data": current_user, "title": "Profile"})
             form.__dict__.get("errors").append("Pengisian data tidak valid")
             return templates.TemplateResponse("admin/profile.html", form.__dict__)
     context = form.__dict__.copy()
-    context.update({"data": current_user})
+    context.update({"data": current_user, "title": "Profile"})
     return templates.TemplateResponse("admin/profile.html", context=context)

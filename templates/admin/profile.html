@@ -16,7 +16,15 @@
                         value="{{data['email']}}"
                         class="block px-3 py-2 rounded-md text-gray-800 w-full bg-white border-2 border-gray-300 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
                 </div>
-                {% if school_name %}
+                <div class="py-2">
+                    <span class="px-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Nama: </span>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        value="{{data['name']}}"
+                        class="block px-3 py-2 rounded-md text-gray-800 w-full bg-white border-2 border-gray-300 focus:bg-white focus:border-blue-500 focus:outline-none shadow-md">
+                </div>
+                {% if data['school_name'] %}
                 <div class="py-2">
                     <span class="px-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Nama Sekolah: </span>
                     <input 

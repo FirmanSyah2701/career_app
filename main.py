@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from routers import admin, career, auth, web
 from core.config import templates
 
-app = FastAPI()
+app = FastAPI(docs_url=None)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
