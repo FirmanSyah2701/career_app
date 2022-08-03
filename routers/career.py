@@ -10,7 +10,7 @@ router = APIRouter(tags=["Career"])
 
 @router.get('/career')
 async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2.get_current_user)):
-    if current_user['msg']:
+    if 'msg' in current_user:
         return templates.TemplateResponse("auth/login.html", {
             "request": request,
             "errors": [current_user['msg']]
