@@ -1,10 +1,20 @@
 from fastapi.responses import StreamingResponse
 from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
 import io
 import json 
+
+def evaluation_sse(list_data: list):
+    X = predict(list_data)
+    sse = []
+    for i in range(1, 11):
+        kmeans = KMeans(n_clusters = i, init='k-means++', random_state = 138)
+        kmeans.fit_predict(X)
+        sse_ = kmeans.inertia_
+        sse.append(sse_)
+    return sse
 
 def predict(list_data: list, current_user: str, student_id: str = None, options: str = None):
     #Generate to dataframe
@@ -26,12 +36,11 @@ def predict(list_data: list, current_user: str, student_id: str = None, options:
     df2 = data_question.loc[:, 'career_planning':'prefered_group_work']
 
     # Data Processing Normalization
-    scaler = StandardScaler()
-    #df_scaled = scaler.fit_transform(data_question)
+    scaler = MinMaxScaler()
     df_scaled = scaler.fit_transform(df2)
 
     # Clustering by KMeans
-    km = KMeans(n_clusters=3, random_state = 42)
+    km = KMeans(n_clusters=3, init='k-means++', random_state = 138)
     X = df_scaled
     y_predicted = km.fit_predict(X)
     df['maturity_career'] = y_predicted
@@ -42,10 +51,10 @@ def predict(list_data: list, current_user: str, student_id: str = None, options:
         (df['maturity_career'] == 2)
     ]
 
-    choices = ['Rendah','Rata-rata', 'Tinggi']
+    choices = ['Rata-rata', 'Tinggi', 'Rendah']
     df['maturity_career'] = np.select(conditions, choices)
     
-    if current_user['school_name']:
+    if current_user['school_name']: 
         df = df[df.school_id == current_user['id']]    
 
     if options is None :
@@ -93,7 +102,6 @@ def predict(list_data: list, current_user: str, student_id: str = None, options:
             'Kematangan Karier'
         ]
         new_df = df.iloc[:,:23].copy()
-        #print(new_df)
         new_df.drop(["_id", 'school_id'], axis=1, inplace=True)
         new_df.columns = new_columns
         new_df.to_csv(stream)
@@ -106,14 +114,6 @@ def predict(list_data: list, current_user: str, student_id: str = None, options:
         cluster_counts = df['maturity_career'].value_counts().sort_index(ascending=True)
         response = cluster_counts.to_dict()
         return response
-
-""" def evaluation_sse(list_data: list):
-    X = predict(list_data)
-    sse = []
-    for i in range(1, 11):
-        kmeans = KMeans(n_clusters = i, random_state = 42)
-        kmeans.fit_predict(X)
-        sse_ = kmeans.inertia_
-        sse.append(sse_)
-
-    return sse """
+    if options == 'evaluation':
+        response = evaluation_sse(X)
+        return response

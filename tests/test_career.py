@@ -27,6 +27,35 @@ def test_career_all_empty(client):
     print(response.context['errors'])
     assert expectation_result in response.context['errors']
 
+def test_career_partially_empty(client):
+    data = {
+        "student_parent_number": "123213131",
+        "student_name": "Firman Syah",
+        "student_class": "XI",
+        "gender": "laki-laki",
+        "school_id": "1",
+        "major": "TI",
+        "cp_one": "",
+        "cp_two": "",
+        "ce_one": "",
+        "ce_two": "",
+        "mcd_one": "",
+        "mcd_two": "",
+        "mcd_three": "",
+        "wwi_one": "",
+        "wwi_two": "",
+        "wwi_three": "",
+        "wwi_four": "",
+        "wwi_five": "",
+        "pgw_one": "",
+        "pgw_two": "",
+        "pgw_three": ""
+    }
+    response = client.post('/', data=data)
+    expectation_result = 'Kuesioner harus diisi!'
+    print(response.context['errors'])
+    assert expectation_result in response.context['errors']    
+
 def test_career_student_parent_number_must_integer(client):
     data = {
         "student_parent_number": "Student Parent Number",
@@ -87,7 +116,6 @@ def test_career_invalid_student_name(client):
     print(response.context['errors'])
     assert expectation_result in response.context['errors']
 
-"""
 def test_career_valid(client):
     data = {
         "_id": "6d40ad83-b87b-4a39-b845-f1460828d01f",
@@ -116,4 +144,4 @@ def test_career_valid(client):
 
     response = client.post('/', data=data)
     expectation_result = 'Data berhasil disimpan'
-    assert expectation_result in response.context['success']  """
+    assert expectation_result in response.context['success']

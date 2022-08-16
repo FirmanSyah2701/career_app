@@ -32,8 +32,8 @@ class ProfileForm:
             self.errors.append("Email is required")
         if not self.email.__contains__("@"):
             self.errors.append("Email is invalid")
-        """ if not re.match(r"/^[a-zA-Z\s\']*$/", self.student_name):
-            self.errors.append("Nama tidak valid!") """
+        """ if not re.match(r"/^[a-zA-Z\s\']*$/", self.name):
+            self.errors.append("Nama tidak valid!") """ 
         if not self.school_name:
             self.errors.append("School name is required")
         if not self.errors:

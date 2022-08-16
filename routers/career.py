@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import RedirectResponse
-from core.config import templates, settings
+from core.config import templates
 from repository.student import StudentRepo
 from models.admin import ShowAdmin
 from middleware import oauth2
@@ -18,11 +18,11 @@ async def career_page(request: Request, current_user: ShowAdmin = Depends(oauth2
     
     students = await StudentRepo.retrieve()
     data = kmeans.predict(students, current_user)
-    
     return templates.TemplateResponse("admin/career.html", {
         "request": request,
         "students": data,
-        "school_id": current_user['id'] or "",
+        "school_id": current_user['id'],
+        "is_admin": current_user['school_name'],
         "title": "Data Karir"
     })
 
