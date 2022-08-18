@@ -9,7 +9,7 @@ from form.profile import ProfileForm
 
 router = APIRouter()
 
-@router.get('/register', tags=['Register Admin'])
+""" @router.get('/register', tags=['Register Admin'])
 async def register_page(request: Request):
     return templates.TemplateResponse("user/register.html", {"request": request})
 
@@ -30,7 +30,7 @@ async def register(request: Request):
             print(e)
             form.__dict__.get("errors").append("Pengisian data tidak valid")
             return templates.TemplateResponse("user/register.html", form.__dict__)
-    return templates.TemplateResponse("user/register.html", form.__dict__)
+    return templates.TemplateResponse("user/register.html", form.__dict__) """
 
 @router.get('/profile', tags=['Profile Admin'])
 async def profile_page(request: Request, current_user: ShowAdmin = Depends(oauth2.get_current_user)):

@@ -59,8 +59,8 @@ class CareerForm:
             self.errors.append("NIS hanya boleh diisi angka!")
         if not self.student_name:
             self.errors.append("Nama harus diisi!")
-        """ if not re.match(r"/^[a-zA-Z\s\']*$/", self.student_name):
-            self.errors.append("Nama tidak valid!") """
+        if not re.match("[a-zA-Z\s\'\.]*$", self.student_name):
+            self.errors.append("Nama tidak valid!")
         if not self.student_class:
             self.errors.append("Kelas harus diisi!")
         if not self.gender:
